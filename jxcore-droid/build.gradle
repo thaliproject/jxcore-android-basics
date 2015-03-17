@@ -1,0 +1,38 @@
+def baseDir = './assets/jxcore'
+
+// We have a package.json file that specifies our top level dependencies, running
+// npm install in the assets/jxcore directory takes care of installing those dependencies.
+task runMainNpm(type:Exec) {
+    workingDir baseDir
+
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains("windows")) {
+        commandLine "cmd", "/c", "npm", "install"
+    } else {
+        commandLine "npm install"
+    }
+}
+
+// We are running an internal PouchDB perf test so we need to include the dev dependencies
+// inside the pouchdb folder. That's what running npm install in the pouchdb folder does.
+task runPouchDBDevDependencies(type:Exec, dependsOn: runMainNpm) {
+    workingDir baseDir + '/node_modules/pouchdb'
+
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains("windows")) {
+        commandLine "cmd", "/c", "npm", "install"
+    } else {
+        commandLine "npm install"
+    }
+}
+
+
+// The current JXCore packaging for node.js files is to put them in assets and Android
+// does not like gz files in assets. So we have to delete them and pray that doesn't
+// break anything.
+task deleteGz(type: Delete, dependsOn: runPouchDBDevDependencies) {
+    delete fileTree(dir: baseDir + '/node_modules', include: "**/*.gz")
+}
+
+task replaceIndexJs(type:Copy, dependsOn: deleteGz) {
+    from baseDir + '/memDownPerf/index.js'
+    into baseDir + '/node_modules/pouchdb/tests/performance'
+}

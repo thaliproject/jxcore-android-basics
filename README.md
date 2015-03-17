@@ -1,3 +1,18 @@
+### Thali PouchDB Perf Test Version
+This project uses Intellij 14.0.3. It should also run just fine in the latest release of Android Studio.
+
+In order to run this project you must have installed:
+
+* Node.js 0.10.x
+* A reasonably modern JDK (I think, IntelliJ might actually handle this)
+* Git
+
+The build infrastructure in Intellij depends on Gradle and execing command lines so all the previous packages need to be configured in the system path so they will be available from the command line during builds.
+
+In order to build please open the jxcore-droid project in Intellij/Android Studio and select the Run->Run jxcore-droid task. This task is connected to a gradle task that will set up the environment correctly.
+
+Note that if you are using Eclipse then before you can build the project you need to jump over to your command line, navigate to the jxcore-droid directory and on the command line run 'gradlew replaceIndexJs'. Then do everything else as normal.
+
 ### JXcore / Node.JS for Android sample
 
 This project is a kind of 'hello world' for JXcore's native interface on an Android application. 

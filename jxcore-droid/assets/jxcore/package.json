@@ -1,0 +1,20 @@
+{
+  "name": "jxcore",
+  "version": "0.0.0",
+  "description": "Run perf tests",
+  "main": "app.js",
+  "dependencies": {
+    "json-nice": "^1.0.1",
+    "jxm": "^0.3.5",
+    "express": "^4.12.2",
+    "pouchdb": "3.3.1",
+    "memdown": "^1.0.0",
+    "express-pouchdb": "^0.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yaron Y. Goland <yarong@microsoft.com> (http://www.goland.org/)",
+  "license": "MIT"
+}

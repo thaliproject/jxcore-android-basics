@@ -25,3 +25,15 @@ console.log("from node module:", jsnice(obj));
 exports.concat = function(a, b, cb) {
   cb(a + b);
 };
+
+var express = require("express");
+var pouchDBApp = express();
+var PouchDB = require("pouchdb");
+var InMemPouchDB = PouchDB.defaults({db: require("memdown")});
+
+// Set up our test server
+pouchDBApp.use("/", require("express-pouchdb")(InMemPouchDB, {mode: "minimumForPouchDB"}));
+// Node tests by default will look at http://localhost:5984
+pouchDBApp.listen(5984);
+
+var eek = require('pouchdb/tests/performance/index.js');
