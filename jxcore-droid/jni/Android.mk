@@ -1,4 +1,5 @@
 LOCAL_PATH := $(call my-dir)
+# JXCORE_OUT_ANDROID := /home/yaron/Documents/depots/jxcore/out_android/android/bin/
 JXCORE_OUT_ANDROID := ../jxcore-binaries/
 
 include $(CLEAR_VARS)
@@ -55,12 +56,30 @@ LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libuv_arm.a
 endif
 include $(PREBUILT_STATIC_LIBRARY)
 
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := libmozjs
+#ifeq ($(TARGET_ARCH),x86)
+#LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libmozjs_ia32.a
+#else
+#LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libmozjs_arm.a
+#endif
+#include $(PREBUILT_STATIC_LIBRARY)
+
 include $(CLEAR_VARS)
-LOCAL_MODULE := libmozjs
+LOCAL_MODULE := libv8base
 ifeq ($(TARGET_ARCH),x86)
-LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libmozjs_ia32.a
+LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libv8_base_ia32.a
 else
-LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libmozjs_arm.a
+LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libv8_base_arm.a
+endif
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libv8nosnapshot
+ifeq ($(TARGET_ARCH),x86)
+LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libv8_nosnapshot_ia32.a
+else
+LOCAL_SRC_FILES := $(JXCORE_OUT_ANDROID)libv8_nosnapshot_arm.a
 endif
 include $(PREBUILT_STATIC_LIBRARY)
 
@@ -85,5 +104,6 @@ LOCAL_LDLIBS := -llog \
                 -ldl \
                 -landroid
 LOCAL_STATIC_LIBRARIES := cares openssl
-LOCAL_WHOLE_STATIC_LIBRARIES := chrome_zlib http_parser sqlite3 libuv libmozjs jxcore_native
+# LOCAL_WHOLE_STATIC_LIBRARIES := chrome_zlib http_parser sqlite3 libuv libmozjs jxcore_native
+LOCAL_WHOLE_STATIC_LIBRARIES := chrome_zlib http_parser sqlite3 libuv libv8base libv8nosnapshot jxcore_native
 include $(BUILD_SHARED_LIBRARY)
