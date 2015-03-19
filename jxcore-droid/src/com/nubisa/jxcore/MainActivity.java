@@ -137,13 +137,25 @@ public class MainActivity extends FragmentActivity {
     Runnable runnable = new Runnable() {
       @Override
       public void run() {
-        int active = loopOnce();
+//        int active = loopOnce();
+//
+//        if (active == 0)
+//          handler.postDelayed(this, 10);
+//        else
+//          handler.postDelayed(this, 1);
 
-        if (active == 0)
-          handler.postDelayed(this, 10);
-        else
+          // This is a quick hack to get our perf to look more like
+          // it will look once we have addTask running properly.
+          int active = loopOnce();
+          if (active != 0) {
+              for (int i = 0; i < 100; i++)
+                  if (loopOnce() == 0) // JNI -> C
+                      break;
+          }
+
           handler.postDelayed(this, 1);
       }
+
     };
 
     if (handler != null) {

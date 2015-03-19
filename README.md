@@ -6,12 +6,18 @@ In order to run this project you must have installed:
 * Node.js 0.10.x
 * A reasonably modern JDK (I think, IntelliJ might actually handle this)
 * Git
+* Latest Android NDK
 
-Before a build run 'gradlew replaceIndexJs'. This will set up all the node.js related dependencies.
+Now go to the command line and go to jxcore-droid and run 'gradlew replaceIndexJs'. This will install a bunch of node.js related stuff that is needed to run the perf tests.
 
-Right now the code is hacked to use V8 and points in android.mk to a directory on my machine where I built JXCore with v8. You will have to edit that path to point to where your v8 binaries are. Or you can just comment it out and use the ../jxcore-binaries path to use Spidermonkey. In either case you need to run ndk/ndk-build in order to hook the binaries together on the machine.
+Next you need to setup the Javascript runtime you want to use. By default the code is designed to run SpiderMonkey. To make that work you need to go to the command line, again to jxcore-droid and then run [path to your Android NDK]/ndk-build. See below if you want to use v8 instead of SpiderMonkey.
 
-From there you can do a standard Android build and run.
+Now open jxcore-droid.iml in AndroidStudio/Intellij and hit Run.
+
+### How do I run the perf tests using v8?
+1. Clone the [JXCore depot](https://github.com/jxcore/jxcore) and follow the build instructions for Android using v8 (make sure to use the v8 build script).
+2. Go to jxcore-droid/jni/Android.mk and uncomment out JXCORE_OUT_ANDROID and change the path to your equivalent path for the JXCore build you just did. Make sure to comment out the second JXCORE_OUT_ANDROID. Then scroll down and comment out the section on libmozjs and uncomment the sections on libv8base and libv8nosnapshot. Finally scroll to the bottom and comment out the first LOCAL_WHOLE_STATIC_LIBRARIES and uncomment the second.
+3. Now run ndk-build as described above and continue.
 
 ### JXcore / Node.JS for Android sample
 
