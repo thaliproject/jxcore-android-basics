@@ -10,6 +10,10 @@ In order to run this project you must have installed:
 
 Now go to the command line and go to jxcore-droid and run 'gradlew replaceIndexJs'. This will install a bunch of node.js related stuff that is needed to run the perf tests.
 
+# To run in node.js
+Go to your favorite command line at the root of the jxcore-android-basics directory and run "node jxcore-droid/assets/jxcore/node_modules/pouchdb/tests/performance/index.js"
+
+# To run in Android
 Next you need to setup the Javascript runtime you want to use. By default the code is designed to run SpiderMonkey. To make that work you need to go to the command line, again to jxcore-droid and then run [path to your Android NDK]/ndk-build. See below if you want to use v8 instead of SpiderMonkey.
 
 Now open jxcore-droid.iml in AndroidStudio/Intellij and hit Run.
